@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import torch
 import numpy as np
+import os
 
 # Define FastAPI app
 app = FastAPI()
@@ -82,3 +83,9 @@ async def predict_interest_rate(input_data: LoanInput):
 @app.get("/")
 def home():
     return {"message": "Loan Interest Prediction API is running!"}
+
+# Run the app on the correct port
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=port)

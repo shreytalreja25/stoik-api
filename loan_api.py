@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import torch
 import numpy as np
@@ -6,6 +7,15 @@ import os
 
 # Define FastAPI app
 app = FastAPI()
+
+# Add CORS middleware to allow frontend access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins; you can replace "*" with specific frontend URL
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],  # Allowed HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 # Define the model architecture
 class ModelMaker(torch.nn.Module):
